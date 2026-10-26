@@ -5,7 +5,7 @@ EquiVault AI is a professional, secure, and agentic Retrieval-Augmented Generati
 ## 🏛️ System Architecture
 
 ### High-Level Flow
-`User Query` $\rightarrow$ `JWT Auth` $\rightarrow$ `Input Guardrail` $\rightarrow$ `LangGraph Router` $\rightarrow$ `{ACL-Filtered RAG | Tool Call | Human-in-the-Loop}` $\rightarrow$ `Output Guardrail` $\rightarrow$ `Final Answer`
+`User Query` $\rightarrow$ `JWT Auth` $\rightarrow$ `Input Guardrail` $\rightarrow$ `LangGraph Router` $\rightarrow$ `{ACL-Filtered Retrieval | Consent-Gated Web Search}` $\rightarrow$ `Output Guardrail` $\rightarrow$ `SSE Response`
 
 ### Technical Stack
 - **Frontend**: React.js, custom CSS (Trading Terminal UI), Markdown rendering, and Axios.
@@ -44,7 +44,7 @@ EquiVault uses a **StateGraph** to route a request:
 ### 3. Advanced Ingestion Pipeline
 - **Multi-Strategy Factory**: Supports `Recursive`, `Fixed`, `Token`, `Semantic`, and **`Agentic`** chunking.
 - **Agentic Chunking**: Uses the LLM to identify logical conceptual boundaries instead of fixed character counts.
-- **Multi-Format Support**: Handles `.pdf`, `.txt`, and `.docx`.
+- **Supported Ingestion Formats**: Handles `.pdf` and `.txt` source documents.
 
 ### 4. Production Observability
 - **Audit Trail**: Every decision (Routing $\rightarrow$ Retrieval $\rightarrow$ Generation) is logged in `equivault_audit.log` with timestamps and User IDs.

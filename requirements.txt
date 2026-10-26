@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 langchain
-langchain_openai
 langchain-ollama
 ddgs
 langchain_huggingface

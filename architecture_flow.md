@@ -1,73 +1,78 @@
-# 🗺️ EquiVault AI: Detailed Architecture Flow
+# EquiVault AI Architecture
 
-This document describes the end-to-end logic of the EquiVault AI system. You can copy the code block below and paste it into the [Mermaid Live Editor](https://mermaid.live/) to generate a high-resolution, colorful visual diagram.
+This document describes the implemented application and ingestion flows.
 
-## 📊 Visual Flow Chart (Mermaid Code)
+## Chat request flow
 
 ```mermaid
-graph TD
-    %% User Interaction Layer
-    User((User)) -->|Inputs Query| Frontend[React Frontend]
-    Frontend -->|JWT Token + Query| Gateway[FastAPI Gateway]
-    
-    %% Security Layer
-    Gateway -->|Auth Check| JWT{JWT Valid?}
-    JWT -->|No| Login[Login Page]
-    JWT -->|Yes| RoleCheck[Extract User Role]
-    
-    %% Agentic Brain (LangGraph)
-    RoleCheck -->|User Role| LG_Start((LangGraph Entry))
-    LG_Start --> Router[Strategist Router Node]
-    
-    %% Decision Logic
-    Router -->|Intent: KNOWLEDGE| RAG_Node[ACL-Filtered RAG Node]
-    Router -->|Intent: REALTIME| Tool_Node[Finance Tool Node]
-    Router -->|Intent: WEB/GAP| HITL_Node[Human-in-the-Loop Node]
-    
-    %% RAG Deep Dive
-    RAG_Node -->|Query + Role| Chroma[(ChromaDB)]
-    Chroma -->|Metadata Filter: role in allowed_roles| RAG_Node
-    RAG_Node -->|Context Chunks| Gen_Node[Educator Generator Node]
-    
-    %% Tool & HITL Flow
-    Tool_Node -->|Real-time Data| Gen_Node
-    HITL_Node -->|Pause State| Admin((Human Admin))
-    Admin -->|Approval/Search| Gen_Node
-    
-    %% Final Output Guardrails
-    Gen_Node -->|Raw Answer| Guardrail{Output Guardrail}
-    Guardrail -->|Violation Found| Error[Compliance Warning]
-    Guardrail -->|Safe| Final[Final Deterministic Answer]
-    
-    %% Return Path
-    Error --> Frontend
-    Final --> Frontend
-    
-    %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style LG_Start fill:#fff4dd,stroke:#d4a017,stroke-width:2px
-    style Chroma fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    style Guardrail fill:#ffebee,stroke:#c62828,stroke-width:2px
-    style HITL_Node fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    style Frontend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+flowchart TD
+    User((User)) --> UI[React frontend]
+    UI -->|POST /chat: message + JWT| API[FastAPI API]
+    API --> Auth{JWT valid?}
+    Auth -->|No| Unauthorized[401 response]
+    Auth -->|Yes| State[Build chat state with user role]
+    State --> Router[LangGraph router]
+
+    Router --> Greeting{Greeting or identity query?}
+    Greeting -->|Yes| Direct[Return short introduction]
+    Greeting -->|No| Guardrail{Input guardrail accepts query?}
+    Guardrail -->|No| Rejected[Return scope rejection]
+    Guardrail -->|Yes| Consent{Explicit web request or user consent?}
+    Consent -->|Yes| Web[Web search node]
+    Consent -->|No| Intent[Ollama router classifies intent]
+    Intent -->|KNOWLEDGE| Retrieve[ACL-filtered retrieval]
+    Intent -->|WEB or REALTIME| Web
+    Intent -->|Other| Retrieve
+
+    Retrieve --> Filter[ChromaDB similarity search]
+    Filter --> Threshold{Relevant authorized chunks found?}
+    Threshold -->|No| AskConsent[Return consent prompt; do not search yet]
+    Threshold -->|Yes| Generate[Generate answer from authorized context]
+
+    Web --> DDG[DuckDuckGo search]
+    DDG --> Summary[Ollama summarizes supplied search snippets]
+    Web --> StockIntent{Stock-specific chart query?}
+    StockIntent -->|Yes| Yahoo[Fetch price history from Yahoo Finance]
+    StockIntent -->|No| NoChart[No chart data]
+
+    Generate --> OutputCheck[Output guardrail]
+    Summary --> OutputCheck
+    Direct --> Stream[Stream response using Server-Sent Events]
+    Rejected --> Stream
+    AskConsent --> Stream
+    OutputCheck --> Stream
+    Yahoo --> Stream
+    NoChart --> Stream
+    Stream --> UI
+
+    API -. audit events .-> Audit[Application audit log]
 ```
 
-## 📝 Detailed Step-by-Step Explanation
+### Chat behavior
 
-### 1. The Request Phase
-- **Auth**: The user sends a request with a JWT. The gateway validates the identity and extracts the **Role** (Basic, Premium, or Admin).
-- **Input Guardrail**: Before the agent starts, the input is scanned for "off-topic" content or prompt injection attempts.
+- `POST /token` authenticates the in-memory development accounts and issues a JWT. Protected endpoints, including `/chat`, validate that token.
+- The router directly handles greetings and identity questions, then checks the input guardrail. A query outside the supported stock-market and investing scope is rejected.
+- An explicit web request or a user-confirmed web-search prompt routes to web search. Otherwise, Ollama classifies the query. `KNOWLEDGE` uses retrieval; `WEB` and `REALTIME` both route to the web-search node.
+- Retrieval applies the role hierarchy (`Basic`; `Premium` plus `Basic`; `Admin` plus lower roles) as a ChromaDB metadata filter. If no authorized result reaches the relevance threshold, the app asks whether to search the web and waits for user consent.
+- Answer generation uses only retrieved authorized context. The web summarizer receives JSON-encoded search snippets as untrusted data and has no tools. Both generated answers and web summaries are checked for prohibited financial guarantees.
+- For stock-specific web queries with a resolvable equity symbol, the web-search node fetches one-year daily price data from Yahoo Finance. The frontend renders a price/volume chart when chart data is returned; it does not generate arbitrary diagrams or earnings-calendar charts.
+- The API streams status, text, and final metadata (sources, chart data, and search-consent state) to the React frontend using SSE. LangGraph uses an in-memory `MemorySaver` checkpointer; it is not durable storage.
 
-### 2. The Reasoning Phase (LangGraph)
-- **The Router**: The LLM analyzes the query to decide the path. 
-    - If it's a concept $\rightarrow$ **RAG**.
-    - If it's a price $\rightarrow$ **Tool**.
-    - If it's a mystery $\rightarrow$ **Human**.
-- **ACL Filtering**: The RAG node doesn't just search for keywords; it tells ChromaDB: *"Only give me chunks where the `access_level` matches the user's role."*
+## Document ingestion flow
 
-### 3. The Verification Phase
-- **HITL**: If the agent hits the `human_approval` node, the state is saved (checkpointed), and the system stops. A human must verify the request before it proceeds to a web search.
-- **Generation**: The AI synthesizes the answer using a "hardened" prompt that prevents the user from overriding system instructions.
+```mermaid
+flowchart LR
+    Files[PDF and TXT source documents] --> Load[PyPDFLoader or TextLoader]
+    Load --> Strategy{Selected chunking strategy}
+    Strategy -->|recursive, fixed, token| TextSplit[Text splitter]
+    Strategy -->|semantic| Semantic[SemanticChunker with Hugging Face embeddings]
+    Strategy -->|agentic| Ollama[Ollama identifies logical chunks per page]
+    TextSplit --> Metadata[Attach source and configured access level]
+    Semantic --> Metadata
+    Ollama --> Metadata
+    Metadata --> Vectorize[Hugging Face embeddings]
+    Vectorize --> Chroma[(Persistent ChromaDB collection)]
+    Chroma --> Retrieval[Role-filtered chat retrieval]
+```
 
-### 4. The Compliance Phase
-- **Output Guardrail**: The final response is scanned for forbidden phrases (e.g., "guaranteed profit"). If found, the response is blocked to ensure the system remains a "Financial Education" tool and not an "Investment Advisor."
+The access level is configured for each source filename in `backend/ingestion.py`. New files must be added to that mapping before ingestion; unknown files fail closed.
