@@ -1,0 +1,50 @@
+# BEGINNER STOCK MARKET GUIDE
+
+Original EquiVault learning material | Access level: Basic
+
+## What a share represents
+
+A share is a unit of ownership in a company. Public companies can issue shares, and investors can trade those shares on a stock exchange. A share price is the latest agreed trading price; it can move as buyers and sellers respond to new information, expectations, and broader market conditions.
+
+Owning a share does not guarantee a profit or a dividend. A company can reduce or stop dividends, and an investor can lose some or all of the amount invested.
+
+## Common market terms
+
+- Stock exchange: A regulated marketplace that matches buyers and sellers of securities.
+- Ticker symbol: A short code used to identify a listed security.
+- Index: A measure that tracks a selected group of securities according to a stated methodology.
+- Bid and ask: The highest displayed price a buyer is offering and the lowest displayed price a seller is asking.
+- Volume: The number of shares traded during a specified period.
+- Dividend: A distribution a company may choose to pay to shareholders.
+- Volatility: The degree to which a price changes over time.
+
+## How an order works
+
+A market order asks a broker to execute promptly at the best available prices. The final execution price is not guaranteed, especially in a fast-moving or illiquid market.
+
+A limit order sets a maximum purchase price or minimum sale price. It can remain unfilled if the market does not reach the limit.
+
+Order types and availability vary by broker and market. Read the broker's order instructions before placing a trade.
+
+## Risk and diversification
+
+Prices can fall, companies can underperform, and an investor may need to sell at a loss. Diversification spreads exposure across different investments; it can reduce the impact of a single holding, but it cannot eliminate market risk or guarantee returns.
+
+Before investing, consider the purpose of the money, the time horizon, the possibility of loss, fees, and whether the investment is understood. Compare information from more than one reliable source and be cautious of guaranteed-return claims.
+
+## A simple research checklist
+
+1. Identify the company and confirm its ticker and exchange.
+2. Read recent company disclosures and understand the business.
+3. Check how the investment fits the intended time horizon and risk tolerance.
+4. Review brokerage fees, order behavior, and any account terms.
+5. Do not rely on a single headline, chart, or online recommendation.
+
+## Official further reading
+
+- SEC Investor Bulletin, 13 Things Everyone Should Know About Investing:
+  https://www.sec.gov/files/investor/alerts/13thingstoknowaboutinvesting.pdf
+- SEC Investor Bulletin, Trading Basics:
+  https://www.sec.gov/files/trading101basics.pdf
+
+Educational material only. It is not an offer, a prediction, or personalized investment advice.

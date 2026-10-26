@@ -1,0 +1,19 @@
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Frontend
+node_modules/
+build/
+coverage/
+
+# Local data and generated files
+data/vector_store/
+*.log
+.DS_Store
+TEST_ACCOUNTS.local.md

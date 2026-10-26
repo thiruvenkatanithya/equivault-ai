@@ -1,0 +1,57 @@
+# ADMIN MARKET RISK AND CONTROL GUIDE
+
+Original EquiVault learning material | Access level: Admin
+
+## Purpose and boundaries
+
+This guide describes a framework for reviewing market, portfolio, and process risks. It is not a trading mandate, a recommendation, or a substitute for an institution's approved policies, legal review, or independent risk oversight.
+
+## Portfolio-level risk review
+
+- Concentration: Measure exposure by issuer, sector, geography, currency, asset class, and common risk factor.
+- Market sensitivity: Review how holdings may respond to broad market moves, interest-rate changes, currency shifts, and volatility shocks.
+- Liquidity: Consider normal and stressed trading volume, bid-ask spreads, market depth, and the time needed to reduce a position.
+- Leverage: Record gross and net exposure, borrowing terms, collateral requirements, and potential margin calls.
+- Drawdown: Track peak-to-trough losses using a consistent time period and explain the assumptions.
+- Counterparty and operational risk: Identify custody, settlement, valuation, data-quality, access-control, and business-continuity dependencies.
+
+Historical volatility and scenario analysis describe possible risk; neither predicts or limits future losses.
+
+## Scenario and stress testing
+
+Use documented scenarios relevant to the portfolio, such as a broad equity decline, an interest-rate shock, currency depreciation, a liquidity contraction, or a correlated counterparty event. State which factors change, which remain fixed, the data date, and the limitations of the model.
+
+Review both single-factor shocks and combined scenarios. A set of individually manageable shocks can create a larger combined impact when correlations change or liquidity disappears.
+
+## Hedging governance
+
+Before a hedge is considered, document the exposure being reduced, the instrument, basis risk, hedge horizon, liquidity, cost, collateral needs, and conditions for review or unwind. A hedge can introduce new risks and may not move in line with the exposure it is intended to offset.
+
+Any hedge execution should follow authorized mandates, segregation of duties, approval limits, and an auditable process. This guide does not authorize a user or system to place trades.
+
+## Controls and escalation
+
+1. Assign an accountable owner to each material risk and define escalation thresholds in approved policy.
+2. Verify market data provenance, timestamps, units, and stale-data handling.
+3. Separate model inputs, model outputs, and human decisions in records.
+4. Restrict access by role and review permissions periodically.
+5. Record overrides, approvals, incidents, and remediation with a timestamp and rationale.
+6. Escalate breaches, unreliable data, or model limitations to the designated risk owner.
+
+## Review record checklist
+
+- Portfolio and valuation date
+- Data providers and timestamps
+- Exposure and scenario definitions
+- Assumptions, exclusions, and model version
+- Results, limitations, and independent review
+- Owner, approval, and follow-up action
+
+## Official further reading
+
+- SEC Investor Bulletin, Trading Basics:
+  https://www.sec.gov/files/trading101basics.pdf
+- SEC EDGAR company filing search:
+  https://www.sec.gov/edgar/search/
+
+Original internal learning notes; they are not an official SEC publication or an investment policy.

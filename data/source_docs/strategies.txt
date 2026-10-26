@@ -1,0 +1,19 @@
+# STRATEGIC INVESTMENT FRAMEWORKS (LEVEL: PREMIUM)
+
+## 1. Value Investing Strategy
+Value investing is the process of selecting stocks that trade for less than their intrinsic value.
+- Core Concept: The "Margin of Safety." Investors look for a significant gap between the market price and the intrinsic value to minimize downside risk.
+- Key Metric: P/E Ratio (Price-to-Earnings). A low P/E compared to industry peers often suggests a value opportunity.
+- Approach: Focus on companies with strong balance sheets, consistent earnings, and undervalued assets.
+
+## 2. Growth Investing Strategy
+Growth investing focuses on companies that are expected to grow at a rate significantly above the average for the market.
+- Core Concept: Future Potential. Investors are willing to pay a higher price now for the expectation of much higher future earnings.
+- Key Metric: Revenue Growth Rate. Consistent double-digit growth in top-line revenue is a primary indicator.
+- Approach: Focus on tech, biotech, or disruptive industries where the company is capturing a new market.
+
+## 3. Dividend Growth Investing (DGI)
+DGI focuses on companies that not only pay dividends but increase them annually.
+- Core Concept: Compounding Income. Reinvesting dividends leads to exponential growth of the share count.
+- Key Metric: Dividend Payout Ratio. A ratio below 60% suggests the dividend is sustainable and has room to grow.
+- Approach: Look for "Dividend Aristocrats"—companies that have increased dividends for 25+ consecutive years.

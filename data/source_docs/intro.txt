@@ -1,0 +1,13 @@
+# STOCK MARKET FUNDAMENTALS (LEVEL: BASIC)
+
+## What is the Stock Market?
+The stock market is a public marketplace where shares of publicly held companies are issued, bought, and sold. When you buy a share, you are buying a piece of ownership in that company.
+
+## Key Terminology
+1. Bull Market: A period of rising stock prices, generally characterized by optimism and investor confidence.
+2. Bear Market: A period of falling stock prices, typically defined as a drop of 20% or more from recent highs.
+3. Market Capitalization: The total value of all a company's shares. Calculated as: (Current Share Price) x (Total Number of Shares).
+4. Dividends: A portion of company profits paid out to shareholders.
+
+## How to Start Investing
+For beginners, the safest way to enter the market is through Index Funds or ETFs (Exchange Traded Funds). These provide instant diversification by owning a small piece of many companies instead of betting on just one.

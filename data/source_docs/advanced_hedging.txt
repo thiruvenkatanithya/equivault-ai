@@ -1,0 +1,16 @@
+# INSTITUTIONAL RISK MANAGEMENT & HEDGING (LEVEL: ADMIN)
+
+## 1. Options Strategies for Hedging
+Hedging is the practice of taking an offsetting position in a related security to reduce risk.
+- Protective Puts: Buying a put option for a stock you already own. This acts as "insurance," allowing you to sell the stock at a pre-set price even if the market crashes.
+- Covered Calls: Selling call options on shares you own to generate income. This is a neutral-to-bullish strategy that provides a small cushion against price drops.
+
+## 2. Delta Hedging
+Delta hedging is a neutral strategy used by institutional traders to reduce the risk associated with price movements in the underlying asset.
+- Mechanism: The trader adjusts their position in the underlying stock based on the 'Delta' (the rate of change of the option price relative to the stock price).
+- Goal: To maintain a "Delta Neutral" portfolio where the overall value remains stable regardless of small price movements in the stock.
+
+## 3. Portfolio Variance and Correlation
+Professional risk management requires understanding the correlation between assets.
+- Negative Correlation: Assets that move in opposite directions (e.g., Gold vs. Stocks). Adding negatively correlated assets reduces total portfolio volatility.
+- Beta Coefficient: Measures a stock's volatility relative to the overall market. A Beta > 1.0 means the stock is more volatile than the market.
